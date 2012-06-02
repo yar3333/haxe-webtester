@@ -28,8 +28,6 @@ class WebTester
 	
 	var maxRequestDuration : Int;
 	
-//	var timeDiff : Float;
-	
 	public function new(baseRequestStorePath="temp/requests", maxRequestDuration=60000/*, timeDiff=0*/)
 	{
 		baseRequestStorePath = baseRequestStorePath.replace("\\", "/");
@@ -39,7 +37,6 @@ class WebTester
 		this.longRequestsDirectory = baseRequestStorePath + "/long";
 		this.exceptionRequestDirectory = baseRequestStorePath + "/exception";
 		this.maxRequestDuration = maxRequestDuration;
-//		this.timeDiff = timeDiff;
 	}
 	
 	public function run(runSiteFunc:Void->Void) 
@@ -49,8 +46,6 @@ class WebTester
 		createDirectory(currentRequestsDirectory);
 		createDirectory(longRequestsDirectory);
 		createDirectory(exceptionRequestDirectory);
-		
-//		detectTimeDiff();
 		
 		processLongRequests();
 		
@@ -66,23 +61,6 @@ class WebTester
 			processExceptionRequest(requestID, e);
 		}
 	}
-	
-/*	function detectTimeDiff()
-	{
-		if (this.timeDiff < 0)
-		{
-			var tsFilePath = baseRequestStorePath + "/webtester-timestamp-" + getUniqueString();
-			var f = File.write(tsFilePath);
-			f.close();
-			var nowTime = Date.now().getTime();
-			var fileTime = FileSystem.stat(tsFilePath).mtime.getTime();
-			//neko.Lib.print(nowTime+"<br />\n");
-			//neko.Lib.print(fileTime + "<br />\n");
-			//neko.Sys.exit(0);
-			this.timeDiff = nowTime - fileTime;
-			FileSystem.deleteFile(tsFilePath);
-		}
-	}*/
 	
 	public function createDirectory(path:String)
     {
@@ -126,9 +104,11 @@ class WebTester
 		var fname = currentRequestsDirectory + "/" + requestID;
 		
 		var fout = File.write(fname);
+		
 		fout.writeString(Date.now().toString() + "\n");
-		fout.writeString(Web.getMethod() + " " + Web.getURI() + "\n");
-		fout.writeString(Web.getParamsString() + "\n");
+		
+		var paramsString = Web.getParamsString();
+		fout.writeString(Web.getMethod() + " " + Web.getURI() + (paramsString != null && paramsString != "" ? "?" + paramsString:"") + "\n");
 		
 		fout.writeString("\n");
 		
@@ -155,7 +135,7 @@ class WebTester
 		{
 			var nowTime = Date.now().getTime();
 			var stat = FileSystem.stat(fname);
-			if (nowTime - (stat.mtime.getTime()/* + timeDiff*/) > maxRequestDuration)
+			if (nowTime - stat.mtime.getTime() > maxRequestDuration)
 			{
 				FileSystem.rename(fname, longRequestsDirectory + "/" + requestID);
 			}
@@ -184,9 +164,8 @@ class WebTester
 		{
 			var fname = currentRequestsDirectory + "/" + file;
 			var stat = FileSystem.stat(fname);
-			if (nowTime - (stat.mtime.getTime()/* + timeDiff*/) > maxRequestDuration)
+			if (nowTime - stat.mtime.getTime() > maxRequestDuration)
 			{
-				//neko.Lib.print(fname + " => " + longRequestsDirectory + "/" + file + "<br >\n");
 				FileSystem.rename(fname, longRequestsDirectory + "/" + file);
 			}			
 		}
