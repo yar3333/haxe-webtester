@@ -1,0 +1,12 @@
+<project name="WebTester" url="https://code.google.com/p/haxe-webtester/" license="GPL">
+	<user name="yar3333" />
+	<tag v="neko" />
+	<tag v="php" />
+	<tag v="web" />
+	<tag v="test" />
+    <description>
+        Tool to help you find logn requests to yoursite.
+    </description>
+    <version name="1.0">Init version.</version>
+    <depends name="MicroTime" />
+</project>
