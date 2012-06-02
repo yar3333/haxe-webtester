@@ -5,7 +5,7 @@
 	<tag v="web" />
 	<tag v="test" />
     <description>
-        Tool to help you find logn requests to yoursite.
+        Tool to help you find long-time requests to your site.
     </description>
     <version name="1.0">Init version.</version>
     <depends name="MicroTime" />
