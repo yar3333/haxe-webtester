@@ -28,7 +28,7 @@ class WebTester
 	
 	var maxRequestDuration : Int;
 	
-	public function new(baseRequestStorePath="temp/requests", maxRequestDuration=60000/*, timeDiff=0*/)
+	public function new(baseRequestStorePath="temp/requests", maxRequestDuration=60000)
 	{
 		baseRequestStorePath = baseRequestStorePath.replace("\\", "/");
 		
