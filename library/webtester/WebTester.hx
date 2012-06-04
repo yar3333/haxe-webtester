@@ -14,6 +14,7 @@ import neko.io.Path;
 import neko.Web;
 #end
 
+import haxe.Stack;
 import microtime.Date;
 
 using StringTools;
