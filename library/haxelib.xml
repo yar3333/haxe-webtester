@@ -5,8 +5,8 @@
 	<tag v="web" />
 	<tag v="test" />
     <description>
-        Tool to help you find long-time requests to your site.
+        Tool to help you find long-time requests on your site.
     </description>
-    <version name="1.0">Init version.</version>
+    <version name="1.1">Add exception stack trace.</version>
     <depends name="MicroTime" />
 </project>
