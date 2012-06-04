@@ -28,7 +28,7 @@ class WebTester
 	
 	var maxRequestDuration : Int;
 	
-	public function new(baseRequestStorePath="temp/requests", maxRequestDuration=60000)
+	public function new(baseRequestStorePath="temp/requests", maxRequestDuration=300000)
 	{
 		baseRequestStorePath = baseRequestStorePath.replace("\\", "/");
 		
@@ -62,7 +62,7 @@ class WebTester
 		}
 	}
 	
-	public function createDirectory(path:String)
+	function createDirectory(path:String)
     {
         if (!FileSystem.exists(path))
 		{
@@ -153,6 +153,13 @@ class WebTester
 		if (FileSystem.exists(fname))
 		{
 			FileSystem.rename(fname, exceptionRequestDirectory + "/" + requestID);
+			
+			var text = "EXCEPTION: " + Std.string(e) + "\n"
+					 + "Stack trace:" + Stack.toString(Stack.exceptionStack()).replace("\n", "\n\t");
+					 
+			var fout = File.write(exceptionRequestDirectory + "/" + requestID + "-exception.txt");
+			fout.writeString(text);
+			fout.close();
 		}
 	}
 	
