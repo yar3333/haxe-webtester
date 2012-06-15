@@ -7,6 +7,5 @@
     <description>
         Tool to help you find long-time requests on your site.
     </description>
-    <version name="1.1">Add exception stack trace.</version>
-    <depends name="MicroTime" />
+    <version name="1.2">Avoid MicroTime library.</version>
 </project>
