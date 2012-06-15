@@ -15,7 +15,6 @@ import neko.Web;
 #end
 
 import haxe.Stack;
-import microtime.Date;
 
 using StringTools;
 
@@ -85,7 +84,7 @@ class WebTester
 	
 	function getTimeString(time:Float) : String
 	{
-		var s = Std.string(time);
+		var s = Std.string(time * 1000);
 		if (s.indexOf(".") >= 0)
 		{
 			s = s.substr(0, s.indexOf("."));
@@ -95,7 +94,7 @@ class WebTester
 	
 	function getUniqueString() : String
 	{
-		return getTimeString(Date.now().getTime()) + "_" + Std.string(Std.int(Math.random() * 99999)).lpad("0", 5);
+		return getTimeString(Sys.time()) + "_" + Std.string(Std.int(Math.random() * 99999)).lpad("0", 5);
 	}
 	
 	function saveRequestData() : String
@@ -134,7 +133,7 @@ class WebTester
 		
 		if (FileSystem.exists(fname))
 		{
-			var nowTime = Date.now().getTime();
+			var nowTime = Sys.time() * 1000;
 			var stat = FileSystem.stat(fname);
 			if (nowTime - stat.mtime.getTime() > maxRequestDuration)
 			{
@@ -166,7 +165,7 @@ class WebTester
 	
 	function processLongRequests()
 	{
-		var nowTime = Date.now().getTime();
+		var nowTime = Sys.time() * 1000;
 		
 		for (file in FileSystem.readDirectory(currentRequestsDirectory))
 		{
