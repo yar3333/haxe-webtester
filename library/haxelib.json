@@ -1,0 +1,11 @@
+{
+  "name": "WebTester",
+  "license": "GPL",
+  "tags": ["neko","php","web","test"],
+  "description": "Tool to help you find long-time requests on your site.",
+  "contributors": ["yar3333"],
+  "releasenote": "Avoid MicroTime library.",
+  "version": "1.2",
+  "url": "https://github.com/yar3333/haxe-webtester",
+  "dependencies": {}
+}
